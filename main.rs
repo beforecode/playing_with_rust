@@ -1,8 +1,15 @@
-// use std::net::{TcpListener};
+use std::net::{TcpListener, TcpStream};
 
 fn main() {
-	// let _server = TcpListener::bind("127.0.0.1:8080");
-	// println!("TCP Server Is OK ON Port 8080");
-	let x:i8 = 5;
-	println!("{:?}", type_of(x));
+	let server = TcpListener::bind("127.0.0.1:8080").unwrap();
+	println!("TCP Server Is OK ON Port 8080");
+	for stream in server.incoming() {
+		println!("Connection Established");
+		let stream = stream.unwrap();
+		handel_connection(stream);
+	}	
+}
+
+fn handel_connection(stream: TcpStream) {
+	println!("{:?}", stream);
 }
