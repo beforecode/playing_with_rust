@@ -21,7 +21,19 @@ fn handel_connection(mut stream: TcpStream) {
 	let mut buffer:Vec<u8> = vec![0; 1024];
 	stream.read(&mut buffer).expect("Reading Buffer Failed");
 	// println!("{:?}", &buffer);
+
+
+
+
+
    let get_request = b"GET / HTTP/1.1\r\n";
+
+
+
+
+
+
+   
    
    if buffer.starts_with(get_request) {
    	println!("1");
