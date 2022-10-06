@@ -26,25 +26,27 @@ fn handel_connection(mut stream: TcpStream) {
 
 
 	let get_request = b"GET / HTTP/1.1\r\n";
+	let post_request = b"POST / HTTP/1.1";
 
-   if buffer.starts_with(get_request) {
-   	
-   	let file = fs::read_to_string("./pages/index.html").expect("Faild to read Inedx File");
-   	let status_line = "HTTP/1.1 200 OK";
-   	
-   	let response = format!(
-   		"{}\r\nContent-Length{}\r\n\r\n{}",
-   		status_line,   		
-   		file.len(),
-   		file);
+  	let (filename, status_line): (&str, &str) = if buffer.starts_with(get_request) {   	   		
+   			("./pages/index.html", "HTTP/1.1 200 OK")   		
+	   	} else if buffer.starts_with(post_request) {
+			("./pages/post.html", "HTTP/1.1 200 OK")
+   		} else {
+   			println!("Unaccepted HTTP Request");
+   			("./pages/404.html", "HTTP/1.1 404 Not Found")
+  	};
 
+  	let file = fs::read_to_string(filename).unwrap();
+  	let response = format!(
+		"{}\r\nContent-Length{}\r\n\r\n{}",
+		status_line,   		
+		file.len(),
+		file
+   	);
 
    	stream.write(response.as_bytes()).expect("Failed to write to stream");
-   	stream.flush().expect("Failed to flush");
-
-   } else {
-   	println!("Unaccepted HTTP Request");
-   }
+	stream.flush().expect("Failed to flush");
 
 }
 
