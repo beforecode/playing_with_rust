@@ -27,11 +27,14 @@ fn handel_connection(mut stream: TcpStream) {
 
 	let get_request = b"GET / HTTP/1.1\r\n";
 	let post_request = b"POST / HTTP/1.1";
+	let about_request = b"GET /about HTTP/1.1";
 
   	let (filename, status_line): (&str, &str) = if buffer.starts_with(get_request) {   	   		
    			("./pages/index.html", "HTTP/1.1 200 OK")   		
 	   	} else if buffer.starts_with(post_request) {
 			("./pages/post.html", "HTTP/1.1 200 OK")
+   		} else if buffer.starts_with(about_request) {
+			("./pages/delete.html", "HTTP/1.1 200 OK")
    		} else {
    			println!("Unaccepted HTTP Request");
    			("./pages/404.html", "HTTP/1.1 404 Not Found")
