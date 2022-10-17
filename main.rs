@@ -1,27 +1,40 @@
-use std::io::BufRead;
-use std::io::BufReader;
-use std::net::{TcpListener, TcpStream};
-use std::io::Read;
-
-fn main() {
-	let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
-	println!("Server is OK on port 7878");
-	for stream in listener.incoming() {
-		let stream = stream.unwrap();
-		handel_connection(stream);
-	}
-	
+struct Article {
+    title: String,
+    content: String
+}
+struct Comment {
+    content: String
 }
 
-fn handel_connection(mut stream: TcpStream) {
-let mut buffer: Vec<u8> = vec![0; 1024];
-	stream.read(&mut buffer).unwrap();
-
-	let mut reader = BufReader::new(stream);
-	let mut line = String::new();
-	let x = reader.read_line(&mut line).unwrap();
-
-
-	println!("{:?}", x);
+pub trait Summerize {
+    fn summed(&self);
 }
 
+pub trait CValidator {
+    fn is_emmpty(&self);
+}
+
+impl Summerize for Article {
+    fn summed(&self) {
+        println!("The title of this article is {} and content is {}", self.title, self.content);
+    }
+}
+
+impl CValidator for Comment {
+    fn is_emmpty(&self) {
+        if self.content.len() > 0 {
+            println!("Allow to be published");
+        } else {
+
+            println!("Trigger a warning");
+        }
+    }
+}
+
+
+pub fn main() {
+    let c = Comment {
+        content: String::from("")
+    };
+    c.is_emmpty();
+}
