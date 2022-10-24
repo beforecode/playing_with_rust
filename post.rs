@@ -10,9 +10,11 @@ pub trait PostValidator {
 }
 
 impl PostValidator for Post {
+	
 	fn length(&self)  -> &str{
 		return "Hello World"
 	}
+
 	fn is_public(&self) -> bool {
 		if self.public {
 			return true
