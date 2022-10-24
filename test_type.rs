@@ -5,12 +5,12 @@ pub struct Comment {
 }
 
 pub trait CommentValidator {
-	fn length(content: &Self) -> bool;
+	fn length(&self) -> usize ;
 }
 
 impl CommentValidator for Comment {
-	fn length(content: &Self) -> bool {
-		println!("{}", content.content);
-		content.content.len() > 0
+	fn length(&self) -> usize {
+		let x = self.content.len();
+		x
 	}
 }

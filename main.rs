@@ -2,31 +2,25 @@
 // use crate::post::Post;
 // use crate::post::PostValidator;
 
-mod test_type;
-use crate::test_type::Comment;
-use crate::test_type::CommentValidator;
+// mod test_type;
+// use crate::test_type::Comment;
+// use crate::test_type::CommentValidator;
 
+fn main() {
 
-pub fn main() {
+    let mut s:String = String::from("Hello");
 
-    // let post = Post {
-    //     title: String::from("my title"),
-    //     content: String::from("my content"),
-    //     public: true
-    // };
+    let t = " World";
 
-    // println!("{}", post.length());
+    str_pusher(&mut s, &t);
 
-    let comm = Comment {
-        content: String::from("Hello Wold"),
-        author: String::from("Yassine"),
-        likes: 0,
-    };
-
-    check_length(comm);
+    println!("{}", s);
 
 }
 
-fn check_length(c: Comment) {
-    println!("{}", c.content);
+
+fn str_pusher(original: &mut String, topush: &str) {
+    for i in topush.chars() {
+        original.push(i);
+    };
 }
